@@ -34,16 +34,102 @@ for(let i = 0; i < equiposNBA.length ; i++){
 
 function Playoff(equipos) {
     return equipos.filter((equipo) => equipo.ganados >= 7)
-}
 
+}
 
 const equiposPlayoff = Playoff(equiposNBA)
 
-console .log(" ")
-console.log("Equipos Clasificados a los Playoffs (Se necesitan 7 partidos ganados o más)")
-for (let i = 0; i < equiposPlayoff.length; i++) {
-    console.log(`${equiposPlayoff[i].ciudad} ${equiposPlayoff[i].nombre} - Partidos Ganados: ${equiposPlayoff[i].ganados}`)
+// console .log(" ")
+// console.log("Equipos Clasificados a los Playoffs (Se necesitan 7 partidos ganados o más)")
+// for (let i = 0; i < equiposPlayoff.length; i++) {
+//     console.log(`${equiposPlayoff[i].ciudad} ${equiposPlayoff[i].nombre} - Partidos Ganados: ${equiposPlayoff[i].ganados}`)
+// }
+
+
+
+function filtrarEquipos(){
+    const body = document.querySelector("body")
+    const input = document.getElementById("buscarInput").value
+    const palabraClave = input.trim().toUpperCase()
+    const resultado = equiposNBA.filter(  (equipo)=> equipo.nombre.toUpperCase().includes(palabraClave))
+
+    if(resultado.length > 0){
+        const container = document.createElement("div")
+
+        
+        resultado.forEach((equipo)=>{
+            const plantilla = document.createElement("div")
+
+
+            const nombre = document.createElement("h2")
+            nombre.textContent = equipo.ciudad + " " + equipo.nombre
+            plantilla.appendChild(nombre)
+
+            const datos = document.createElement("p")
+            datos.textContent = "| Wins: " + equipo.ganados + " | Loses: " + equipo.perdidos + " | Puntos Promedio: " + equipo.puntosPromedio
+            plantilla.appendChild(datos)
+
+
+            container.appendChild(plantilla)
+        })
+
+            body.appendChild(container)
+    }else{
+        alert("No se encontro resultado")
+    }
 }
 
 
+const buscarBtn = document.getElementById("buscarBoton")
+buscarBtn.addEventListener("click", filtrarEquipos)
 
+
+function verPlayoff(){
+    
+    const body = document.querySelector("body")
+    const container = document.createElement("div")
+
+    equiposPlayoff.forEach((equipo) => {
+        const plantilla = document.createElement("div")
+
+        const ciudad = document.createElement("h2")
+        ciudad.textContent = equipo.ciudad + " " + equipo.nombre
+        plantilla.appendChild(ciudad)  
+
+        const ganados = document.createElement("p")
+        ganados.textContent = "Partidos ganados: " + equipo.ganados
+        plantilla.appendChild(ganados)
+
+        container.appendChild(plantilla)
+    })
+
+    body.appendChild(container)
+}
+
+const playoffBtn = document.getElementById("playoff")
+playoffBtn.addEventListener("click", verPlayoff)
+
+function verTabla(){
+    
+    const body = document.querySelector("body")
+    const container = document.createElement("div")
+
+    equiposNBA.forEach((equipo) => {
+        const plantilla = document.createElement("div")
+
+        const ciudad = document.createElement("h2")
+        ciudad.textContent = equipo.ciudad + " " + equipo.nombre
+        plantilla.appendChild(ciudad)  
+
+        const datos = document.createElement("p")
+        datos.textContent = "| Wins: " + equipo.ganados + " | Loses: " + equipo.perdidos + " | Puntos Promedio: " + equipo.puntosPromedio
+        plantilla.appendChild(datos)
+
+        container.appendChild(plantilla)
+    })
+
+    body.appendChild(container)
+}
+
+const tablaBtn = document.getElementById("tabla")
+tablaBtn.addEventListener("click", verTabla)
