@@ -73,7 +73,11 @@ buscarBtn.addEventListener("click", () => {
 
         guardarHistorial(resultado)
     } else {
-        alert("No se encontró resultado")
+        Swal.fire({
+            title: "Error",
+            text: "No se encontró el equipo",
+            icon: "error"
+        });
     }
 })
 
